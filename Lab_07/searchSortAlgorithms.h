@@ -19,6 +19,7 @@ int seqSearch(const elemType list[], int length, const elemType& item)
         return -1;
 }
 
+/*
 // version 1.5
 template <class elemType>
 int seqSearch(const elemType list[], int length, const elemType& item, int &compCount)
@@ -38,6 +39,21 @@ int seqSearch(const elemType list[], int length, const elemType& item, int &comp
         compCount += 1;
     }
     return (found ? loc : -1);
+}
+*/
+// version 1.5 (refactored)
+template <class elemType>
+int seqSearch(const elemType list[], int length, const elemType& item, int &compCount)
+{
+    int loc = 0;    //change 1
+    bool found = false;
+
+    while (loc < length && !found) { 
+        if (list[loc] == item ? found = true : loc++);  //change 2
+        compCount += 1;
+    }
+    
+    return (found ? loc : -1);  //change 3
 }
 
 template <class elemType>
@@ -60,6 +76,7 @@ int seqSearchRange(const elemType list[], int first, int last, const elemType& i
     return (found ? loc : -1);
 }
 
+// version 1.0
 template <class elemType>
 int binarySearch(const elemType list[], int length, 
                  const elemType& item)
@@ -88,6 +105,8 @@ int binarySearch(const elemType list[], int length,
         return -1;
 }
 
+/*
+// version 1.5
 template <class elemType>
 int binarySearch(const elemType list[], int length, 
                  const elemType& item, int &compCount)
@@ -120,6 +139,34 @@ int binarySearch(const elemType list[], int length,
         return mid;
     else 
         return -1;
+}
+*/
+
+// version 1.5 (refactored)
+template <class elemType>
+int binarySearch(const elemType list[], int length, 
+                 const elemType& item, int &compCount)
+{
+    int first = 0;
+    int last = length - 1;
+    int mid;
+
+    bool found = false;
+
+    while (first <= last && !found) {
+        mid = (first + last) / 2;
+
+        compCount += 1;
+        if (list[mid] == item) {
+            found = true;
+        } else {
+            compCount += 1;
+            if (list[mid] > item ? last = mid - 1 : first = mid + 1); //change 1
+        }
+        
+    }
+
+    return (found ? mid : -1);  //change 2
 }
 
 template <class elemType>
